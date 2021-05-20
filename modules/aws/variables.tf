@@ -1,0 +1,10 @@
+variable "instance_sg_rules_ingress" {}
+variable "instance_sg_rules_egress" {}
+variable "public_subnet_id" {}
+variable "instance_type" {}
+variable "instance_ami" {}
+variable "instance_keys" {}
+variable "user_data" {}
+variable "global_tags" {}
+variable "vpc_id" {}
+variable "private_ip" {}

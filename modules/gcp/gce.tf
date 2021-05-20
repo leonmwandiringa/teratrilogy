@@ -3,7 +3,7 @@ resource "google_compute_instance" "default" {
   name         = "${var.tags.Project}-${var.tags.Environment}-vm"
   machine_type = var.instance_type
   zone         = var.instance_zone
-  project = var.tags.Project
+  project = var.tags.ProjectId
   # tags         = merge(
   #   var.tags,
   #   {
@@ -17,7 +17,7 @@ resource "google_compute_instance" "default" {
     }
   }
 
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential apache2"
+  metadata_startup_script = "sudo apt-get update && sudo apt-get install apache2 -y && echo '<!doctype html><html><body><h1>Hello from Terraform on Google Cloud!</h1></body></html>' | sudo tee /var/www/html/index.html"
 
   network_interface {
     network = "default"

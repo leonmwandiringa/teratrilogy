@@ -7,6 +7,7 @@ variable "global_tags" {
     "Author"      = "Leon Mwandiringa",
     "Environment" = "development",
     "Project"     = "teratrilogy",
+    "ProjectId" = "carbon-scene-314313",
     "Provisioner" = "terraform"
   }
 }
