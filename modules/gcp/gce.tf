@@ -1,6 +1,5 @@
 
-# Create VM #1
-resource "google_compute_instance" "teratrilogy_gcp" {
+resource "google_compute_instance" "default" {
   name         = "${var.tags.Project}-${var.tags.Environment}-vm"
   machine_type = var.instance_type
   zone         = var.instance_zone
@@ -23,5 +22,10 @@ resource "google_compute_instance" "teratrilogy_gcp" {
   network_interface {
     network = "default"
     access_config {}
+  }
+
+  service_account {
+    email  = google_service_account.default.email
+    scopes = ["cloud-platform"]
   }
 } 

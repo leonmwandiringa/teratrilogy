@@ -10,4 +10,5 @@
 
 provider "google" {
   region = var.gcp_region
+  project = var.global_tags.Project
 }

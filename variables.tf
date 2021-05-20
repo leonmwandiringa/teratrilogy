@@ -39,7 +39,7 @@ variable "azure_az" {
 variable "gcp_az" {
   type        = string
   description = "global region"
-  default     = "us-east1-a"
+  default     = "us-east1-c"
 }
 
 //////////////// GCP VARIABLES //////////////
