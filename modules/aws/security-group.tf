@@ -2,7 +2,10 @@
 resource "aws_security_group" "default" {
   name        = "instance-security-group"
   description = "Allow HTTP, HTTPS and SSH traffic"
-  vpc_id = var.vpc_id
+  vpc_id = aws_default_vpc.default.id
+  depends_on = [
+    aws_default_vpc.default
+  ]
 
   dynamic "ingress" {
     for_each = var.instance_sg_rules_ingress
