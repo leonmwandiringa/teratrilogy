@@ -1,0 +1,41 @@
+name: Deployment
+
+on:
+  push:
+    branches: [master]
+env:
+  AWS_REGION: us-east-2
+  AWS_AZS: us-east-2a
+  GCP_REGION: us-east1
+  GCP_REGION: us-east1-a
+#important no spaces on az used split(",") function
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Transform Infrastructure Values
+        id: transform_infrastructure_values
+        run: |
+          sed -i "s|{{AWS_REGION}}|${{ env.AWS_REGION }}|g" "stages/${{ env.ENV_STAGE }}/variables.tf"
+          sed -i "s|{{PROJECT_NAME}}|${{ env.PROJECT_NAME }}|g" "stages/${{ env.ENV_STAGE }}/variables.tf"
+          sed -i "s|{{AWS_AZS}}|${{ env.AWS_AZS }}|g" "stages/${{ env.ENV_STAGE }}/variables.tf"
+          sed -i "s|{{AWS_REGION}}|${{ env.AWS_REGION }}|g" "stages/${{ env.ENV_STAGE }}/backend.tf"
+          sed -i "s|{{RESOURCE_NAME}}|${{ env.RESOURCE_NAME }}|g" "stages/${{ env.ENV_STAGE }}/backend.tf"
+      - name: "Terraform Init"
+        id: terraform_init
+        run: terraform init stages/${{ env.ENV_STAGE }}/
+      - name: "Terraform Plan"
+        id: terraform_plan
+        run: terraform plan stages/${{ env.ENV_STAGE }}/
+      - name: "Terraform Compare and Apply"
+        id: terraform_compare_and_apply
+        run: terraform apply stages/${{ env.ENV_STAGE }}/ -auto-approve
