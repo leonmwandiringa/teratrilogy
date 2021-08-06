@@ -1,5 +1,5 @@
 
-# Tangent Solutions
+# LTM
 # required version
 
 terraform {

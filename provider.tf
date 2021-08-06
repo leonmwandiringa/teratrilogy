@@ -5,9 +5,10 @@ provider "aws" {
   alias  = "aws"
 }
 
-# provider "azure" {
-#   region = var.azure_region
-# }
+provider "azure" {
+  region = var.azure_region
+  alias = "azure"
+}
 
 provider "google" {
   region = var.gcp_region

@@ -7,7 +7,6 @@ env:
   AWS_REGION: us-east-2
   AWS_AZS: us-east-2a
   GCP_REGION: us-east1
-  GCP_REGION: us-east1-a
 #important no spaces on az used split(",") function
 
 jobs:
